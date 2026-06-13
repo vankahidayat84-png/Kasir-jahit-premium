@@ -26,7 +26,10 @@ fun PengaturanScreen(viewModel: JahitViewModel) {
         },
         containerColor = BackgroundDark
     ) { padding ->
-        LazyColumn(modifier = Modifier.padding(padding).fillMaxSize().padding(16.dp)) {
+        LazyColumn(
+            modifier = Modifier.padding(padding).fillMaxSize().navigationBarsPadding(),
+            contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 100.dp)
+        ) {
             item {
                 SettingItem("Backup Data") { /*TODO*/ }
                 SettingItem("Restore Data") { /*TODO*/ }

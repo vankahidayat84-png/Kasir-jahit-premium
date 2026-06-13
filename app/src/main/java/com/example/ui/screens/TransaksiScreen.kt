@@ -33,7 +33,8 @@ fun TransaksiScreen(viewModel: JahitViewModel) {
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { showDialog = true },
-                containerColor = AccentMaroon
+                containerColor = AccentMaroon,
+                modifier = Modifier.padding(bottom = 16.dp).navigationBarsPadding()
             ) {
                 Icon(androidx.compose.material.icons.Icons.Default.Add, contentDescription = "Add", tint = TextWhite)
             }
@@ -107,7 +108,7 @@ fun AddTransactionScreen(viewModel: JahitViewModel, onDismiss: () -> Unit) {
             },
             bottomBar = {
                 Surface(color = CardDark, shadowElevation = 16.dp) {
-                    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                    Column(modifier = Modifier.fillMaxWidth().navigationBarsPadding().padding(16.dp)) {
                         Button(
                             onClick = {
                                 val tx = com.example.data.Tx(
@@ -139,8 +140,8 @@ fun AddTransactionScreen(viewModel: JahitViewModel, onDismiss: () -> Unit) {
             containerColor = BackgroundDark
         ) { padding ->
             androidx.compose.foundation.lazy.LazyColumn(
-                contentPadding = PaddingValues(bottom = 32.dp),
-                modifier = Modifier.padding(padding).fillMaxSize().padding(horizontal = 16.dp), 
+                contentPadding = PaddingValues(bottom = 100.dp),
+                modifier = Modifier.padding(padding).fillMaxSize().imePadding().padding(horizontal = 16.dp), 
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 item {

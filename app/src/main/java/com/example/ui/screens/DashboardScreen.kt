@@ -62,8 +62,8 @@ fun DashboardScreen(viewModel: JahitViewModel) {
         containerColor = BackgroundDark
     ) { padding ->
         LazyColumn(
-            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
-            modifier = Modifier.padding(padding).fillMaxSize(),
+            contentPadding = PaddingValues(start = 12.dp, top = 8.dp, end = 12.dp, bottom = 100.dp),
+            modifier = Modifier.padding(padding).fillMaxSize().navigationBarsPadding(),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             item {

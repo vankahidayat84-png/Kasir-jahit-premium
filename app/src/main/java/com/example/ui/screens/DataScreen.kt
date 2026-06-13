@@ -30,7 +30,8 @@ fun DataScreen(viewModel: JahitViewModel) {
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { defaultShowDialog = true },
-                containerColor = AccentMaroon
+                containerColor = AccentMaroon,
+                modifier = Modifier.padding(bottom = 16.dp).navigationBarsPadding()
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add", tint = TextWhite)
             }
@@ -79,7 +80,7 @@ fun PelangganTab(viewModel: JahitViewModel, showDialog: Boolean, onDismissDialog
 
     Box(modifier = Modifier.fillMaxSize()) {
         androidx.compose.foundation.lazy.LazyColumn(
-            contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 88.dp),
+            contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 100.dp),
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -133,7 +134,7 @@ fun InventarisTab(viewModel: JahitViewModel, showDialog: Boolean, onDismissDialo
 
     Box(modifier = Modifier.fillMaxSize()) {
         androidx.compose.foundation.lazy.LazyColumn(
-            contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 88.dp),
+            contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 100.dp),
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -194,7 +195,7 @@ fun LayananTab(viewModel: JahitViewModel, showDialog: Boolean, onDismissDialog: 
 
     Box(modifier = Modifier.fillMaxSize()) {
         androidx.compose.foundation.lazy.LazyColumn(
-            contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 88.dp),
+            contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 100.dp),
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -247,7 +248,7 @@ fun SupplierTab(viewModel: JahitViewModel, showDialog: Boolean, onDismissDialog:
 
     Box(modifier = Modifier.fillMaxSize()) {
         androidx.compose.foundation.lazy.LazyColumn(
-            contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 88.dp),
+            contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 100.dp),
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {

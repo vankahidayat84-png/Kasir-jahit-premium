@@ -42,14 +42,18 @@ fun LaporanScreen(viewModel: JahitViewModel) {
         },
         containerColor = BackgroundDark
     ) { padding ->
-        Column(modifier = Modifier.padding(padding).fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            LaporanItem("Pendapatan", formatMoney(pendapatan), SuccessGreen)
-            LaporanItem("Modal Terpakai", formatMoney(validModal), WarningOrange)
-            LaporanItem("Piutang Aktif", formatMoney(piutang), WarningOrange)
-            LaporanItem("Hutang Aktif", formatMoney(hutang), DangerRed)
-            LaporanItem("Kerugian", formatMoney(kerugian), DangerRed)
-            Spacer(modifier = Modifier.height(16.dp))
-            LaporanItem("Estimasi Laba Bersih", formatMoney(labaBersih), if(labaBersih>=0) SuccessGreen else DangerRed, isBold = true)
+        androidx.compose.foundation.lazy.LazyColumn(
+            contentPadding = PaddingValues(bottom = 100.dp, top = 16.dp, start = 16.dp, end = 16.dp),
+            modifier = Modifier.padding(padding).fillMaxSize().navigationBarsPadding(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            item { LaporanItem("Pendapatan", formatMoney(pendapatan), SuccessGreen) }
+            item { LaporanItem("Modal Terpakai", formatMoney(validModal), WarningOrange) }
+            item { LaporanItem("Piutang Aktif", formatMoney(piutang), WarningOrange) }
+            item { LaporanItem("Hutang Aktif", formatMoney(hutang), DangerRed) }
+            item { LaporanItem("Kerugian", formatMoney(kerugian), DangerRed) }
+            item { Spacer(modifier = Modifier.height(16.dp)) }
+            item { LaporanItem("Estimasi Laba Bersih", formatMoney(labaBersih), if(labaBersih>=0) SuccessGreen else DangerRed, isBold = true) }
         }
     }
 }
