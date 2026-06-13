@@ -30,8 +30,7 @@ fun MainApp(navController: NavHostController, viewModel: JahitViewModel) {
             NavigationBar(
                 containerColor = Color(0xFF141414), // Navigation background
                 contentColor = TextWhite,
-                tonalElevation = 0.dp,
-                modifier = Modifier.height(72.dp)
+                tonalElevation = 0.dp
             ) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route

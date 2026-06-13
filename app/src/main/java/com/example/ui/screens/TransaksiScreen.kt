@@ -41,7 +41,7 @@ fun TransaksiScreen(viewModel: JahitViewModel) {
     ) { padding ->
         Box(modifier = Modifier.padding(padding).fillMaxSize()) {
             androidx.compose.foundation.lazy.LazyColumn(
-                contentPadding = PaddingValues(16.dp),
+                contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 88.dp),
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -138,7 +138,11 @@ fun AddTransactionScreen(viewModel: JahitViewModel, onDismiss: () -> Unit) {
             },
             containerColor = BackgroundDark
         ) { padding ->
-            androidx.compose.foundation.lazy.LazyColumn(modifier = Modifier.padding(padding).fillMaxSize().padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            androidx.compose.foundation.lazy.LazyColumn(
+                contentPadding = PaddingValues(bottom = 32.dp),
+                modifier = Modifier.padding(padding).fillMaxSize().padding(horizontal = 16.dp), 
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
                 item {
                     Spacer(modifier = Modifier.height(8.dp))
                     OutlinedTextField(

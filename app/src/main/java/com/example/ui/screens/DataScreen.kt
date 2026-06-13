@@ -18,12 +18,22 @@ fun DataScreen(viewModel: JahitViewModel) {
     var selectedTabIndex by remember { mutableStateOf(0) }
     val tabs = listOf("Pelanggan", "Inventaris", "Layanan Jahit", "Supplier")
 
+    var defaultShowDialog by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Master Data", color = TextWhite) },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = BackgroundDark)
             )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { defaultShowDialog = true },
+                containerColor = AccentMaroon
+            ) {
+                Icon(Icons.Default.Add, contentDescription = "Add", tint = TextWhite)
+            }
         },
         containerColor = BackgroundDark
     ) { padding ->
@@ -32,6 +42,7 @@ fun DataScreen(viewModel: JahitViewModel) {
                 selectedTabIndex = selectedTabIndex,
                 containerColor = BackgroundDark,
                 contentColor = TextWhite,
+                edgePadding = 8.dp,
                 indicator = { tabPositions ->
                     TabRowDefaults.SecondaryIndicator(
                         Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
@@ -52,10 +63,10 @@ fun DataScreen(viewModel: JahitViewModel) {
 
             Box(modifier = Modifier.weight(1f)) {
                 when (selectedTabIndex) {
-                    0 -> PelangganTab(viewModel)
-                    1 -> InventarisTab(viewModel)
-                    2 -> LayananTab(viewModel)
-                    3 -> SupplierTab(viewModel)
+                    0 -> PelangganTab(viewModel, defaultShowDialog) { defaultShowDialog = false }
+                    1 -> InventarisTab(viewModel, defaultShowDialog) { defaultShowDialog = false }
+                    2 -> LayananTab(viewModel, defaultShowDialog) { defaultShowDialog = false }
+                    3 -> SupplierTab(viewModel, defaultShowDialog) { defaultShowDialog = false }
                 }
             }
         }
@@ -63,13 +74,12 @@ fun DataScreen(viewModel: JahitViewModel) {
 }
 
 @Composable
-fun PelangganTab(viewModel: JahitViewModel) {
+fun PelangganTab(viewModel: JahitViewModel, showDialog: Boolean, onDismissDialog: () -> Unit) {
     val customers by viewModel.customers.collectAsState()
-    var showDialog by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         androidx.compose.foundation.lazy.LazyColumn(
-            contentPadding = PaddingValues(16.dp),
+            contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 88.dp),
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -85,14 +95,6 @@ fun PelangganTab(viewModel: JahitViewModel) {
             }
         }
 
-        FloatingActionButton(
-            onClick = { showDialog = true },
-            containerColor = AccentMaroon,
-            modifier = Modifier.align(androidx.compose.ui.Alignment.BottomEnd).padding(16.dp)
-        ) {
-            Icon(androidx.compose.material.icons.Icons.Default.Add, contentDescription = "Add", tint = TextWhite)
-        }
-
         if (showDialog) {
             var name by remember { mutableStateOf("") }
             var phone by remember { mutableStateOf("") }
@@ -100,7 +102,7 @@ fun PelangganTab(viewModel: JahitViewModel) {
             var notes by remember { mutableStateOf("") }
 
             AlertDialog(
-                onDismissRequest = { showDialog = false },
+                onDismissRequest = { onDismissDialog() },
                 title = { Text("Tambah Pelanggan", color = TextWhite) },
                 containerColor = BackgroundDark,
                 text = {
@@ -114,11 +116,11 @@ fun PelangganTab(viewModel: JahitViewModel) {
                 confirmButton = {
                     TextButton(onClick = {
                         viewModel.addCustomer(com.example.data.Customer(name = name, phone = phone, address = address, notes = notes))
-                        showDialog = false
+                        onDismissDialog()
                     }) { Text("Simpan", color = SuccessGreen) }
                 },
                 dismissButton = {
-                    TextButton(onClick = { showDialog = false }) { Text("Batal", color = DangerRed) }
+                    TextButton(onClick = { onDismissDialog() }) { Text("Batal", color = DangerRed) }
                 }
             )
         }
@@ -126,13 +128,12 @@ fun PelangganTab(viewModel: JahitViewModel) {
 }
 
 @Composable
-fun InventarisTab(viewModel: JahitViewModel) {
+fun InventarisTab(viewModel: JahitViewModel, showDialog: Boolean, onDismissDialog: () -> Unit) {
     val inventory by viewModel.inventory.collectAsState()
-    var showDialog by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         androidx.compose.foundation.lazy.LazyColumn(
-            contentPadding = PaddingValues(16.dp),
+            contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 88.dp),
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -148,14 +149,6 @@ fun InventarisTab(viewModel: JahitViewModel) {
             }
         }
 
-        FloatingActionButton(
-            onClick = { showDialog = true },
-            containerColor = AccentMaroon,
-            modifier = Modifier.align(androidx.compose.ui.Alignment.BottomEnd).padding(16.dp)
-        ) {
-            Icon(androidx.compose.material.icons.Icons.Default.Add, contentDescription = "Add", tint = TextWhite)
-        }
-
         if (showDialog) {
             var name by remember { mutableStateOf("") }
             var category by remember { mutableStateOf("") }
@@ -164,7 +157,7 @@ fun InventarisTab(viewModel: JahitViewModel) {
             var cost by remember { mutableStateOf("") }
             
             AlertDialog(
-                onDismissRequest = { showDialog = false },
+                onDismissRequest = { onDismissDialog() },
                 title = { Text("Tambah Inventaris", color = TextWhite) },
                 containerColor = BackgroundDark,
                 text = {
@@ -184,11 +177,11 @@ fun InventarisTab(viewModel: JahitViewModel) {
                             costPrice = cost.toDoubleOrNull() ?: 0.0,
                             supplierName = "", notes = ""
                         ))
-                        showDialog = false
+                        onDismissDialog()
                     }) { Text("Simpan", color = SuccessGreen) }
                 },
                 dismissButton = {
-                    TextButton(onClick = { showDialog = false }) { Text("Batal", color = DangerRed) }
+                    TextButton(onClick = { onDismissDialog() }) { Text("Batal", color = DangerRed) }
                 }
             )
         }
@@ -196,13 +189,12 @@ fun InventarisTab(viewModel: JahitViewModel) {
 }
 
 @Composable
-fun LayananTab(viewModel: JahitViewModel) {
+fun LayananTab(viewModel: JahitViewModel, showDialog: Boolean, onDismissDialog: () -> Unit) {
     val services by viewModel.services.collectAsState()
-    var showDialog by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         androidx.compose.foundation.lazy.LazyColumn(
-            contentPadding = PaddingValues(16.dp),
+            contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 88.dp),
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -217,21 +209,13 @@ fun LayananTab(viewModel: JahitViewModel) {
             }
         }
 
-        FloatingActionButton(
-            onClick = { showDialog = true },
-            containerColor = AccentMaroon,
-            modifier = Modifier.align(androidx.compose.ui.Alignment.BottomEnd).padding(16.dp)
-        ) {
-            Icon(androidx.compose.material.icons.Icons.Default.Add, contentDescription = "Add", tint = TextWhite)
-        }
-
         if (showDialog) {
             var name by remember { mutableStateOf("") }
             var price by remember { mutableStateOf("") }
             var notes by remember { mutableStateOf("") }
             
             AlertDialog(
-                onDismissRequest = { showDialog = false },
+                onDismissRequest = { onDismissDialog() },
                 title = { Text("Tambah Layanan", color = TextWhite) },
                 containerColor = BackgroundDark,
                 text = {
@@ -246,11 +230,11 @@ fun LayananTab(viewModel: JahitViewModel) {
                         viewModel.addService(com.example.data.ServiceItem(
                             name = name, defaultPrice = price.toDoubleOrNull() ?: 0.0, notes = notes
                         ))
-                        showDialog = false
+                        onDismissDialog()
                     }) { Text("Simpan", color = SuccessGreen) }
                 },
                 dismissButton = {
-                    TextButton(onClick = { showDialog = false }) { Text("Batal", color = DangerRed) }
+                    TextButton(onClick = { onDismissDialog() }) { Text("Batal", color = DangerRed) }
                 }
             )
         }
@@ -258,13 +242,12 @@ fun LayananTab(viewModel: JahitViewModel) {
 }
 
 @Composable
-fun SupplierTab(viewModel: JahitViewModel) {
+fun SupplierTab(viewModel: JahitViewModel, showDialog: Boolean, onDismissDialog: () -> Unit) {
     val suppliers by viewModel.suppliers.collectAsState()
-    var showDialog by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         androidx.compose.foundation.lazy.LazyColumn(
-            contentPadding = PaddingValues(16.dp),
+            contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 88.dp),
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -279,14 +262,6 @@ fun SupplierTab(viewModel: JahitViewModel) {
             }
         }
 
-        FloatingActionButton(
-            onClick = { showDialog = true },
-            containerColor = AccentMaroon,
-            modifier = Modifier.align(androidx.compose.ui.Alignment.BottomEnd).padding(16.dp)
-        ) {
-            Icon(androidx.compose.material.icons.Icons.Default.Add, contentDescription = "Add", tint = TextWhite)
-        }
-
         if (showDialog) {
             var name by remember { mutableStateOf("") }
             var phone by remember { mutableStateOf("") }
@@ -294,7 +269,7 @@ fun SupplierTab(viewModel: JahitViewModel) {
             var notes by remember { mutableStateOf("") }
             
             AlertDialog(
-                onDismissRequest = { showDialog = false },
+                onDismissRequest = { onDismissDialog() },
                 title = { Text("Tambah Supplier", color = TextWhite) },
                 containerColor = BackgroundDark,
                 text = {
@@ -310,11 +285,11 @@ fun SupplierTab(viewModel: JahitViewModel) {
                         viewModel.addSupplier(com.example.data.Supplier(
                             name = name, phone = phone, address = address, notes = notes
                         ))
-                        showDialog = false
+                        onDismissDialog()
                     }) { Text("Simpan", color = SuccessGreen) }
                 },
                 dismissButton = {
-                    TextButton(onClick = { showDialog = false }) { Text("Batal", color = DangerRed) }
+                    TextButton(onClick = { onDismissDialog() }) { Text("Batal", color = DangerRed) }
                 }
             )
         }
