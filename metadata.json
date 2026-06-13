@@ -1,0 +1,6 @@
+{
+  "name": "Jahitkaav Pro Max",
+  "description": "Aplikasi manajemen usaha jahit profesional offline.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
